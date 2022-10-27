@@ -33,7 +33,7 @@ router.post('/:id', (req, res) => {
         }
         return q;
     });
-    res.json(questions)
+    res.json(qtn)
 });
 
 router.delete('/:id', (req, res) => {

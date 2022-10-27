@@ -31,9 +31,9 @@ router.post('/:id', (req, res) => {
         if (id === c.id) {
             c.name = req.body.name;
         }
-        return ch;
+        return c;
     });
-    res.json(choices)
+    res.json(ch)
 });
 
 router.delete('/:id', (req, res) => {
