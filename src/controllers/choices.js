@@ -26,12 +26,12 @@ router.get('/:id', (req, res) => {
 
 router.post('/:id', (req, res) => {
     const id = Number(req.params.id);
-    const qtn = choices.find(q => q.id == id);
+    const ch = choices.find(c => c.id == id);
     choices.map((c) => {
         if (id === c.id) {
-            q.name = req.body.name;
+            c.name = req.body.name;
         }
-        return c;
+        return ch;
     });
     res.json(choices)
 });
