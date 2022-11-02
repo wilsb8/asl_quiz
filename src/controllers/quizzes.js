@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 let quizzes = require('../models/quizzes');
 const bodyParser = require('body-parser');
+const { Quiz } = require('../models');
 
 router.use(bodyParser.urlencoded({ extended: false }))
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const quizzes = await Quiz.findAll();
     res.json(quizzes)
 });
 
