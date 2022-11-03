@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     //     name
     // });
     const { name } = req.body;
-    const quiz = await Quiz.name({name});
+    const quiz = await Quiz.create({name})
     res.json(quiz)
 });
 
