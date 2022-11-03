@@ -1,23 +1,25 @@
-const express = require('express');
-const router = express.Router();
-const { Quiz } = require('../models')
-const bodyParser = require('body-parser');
+const express = require('express')
+const router = express.Router()
+const { Quiz } = require('../models');
+const bodyParser = require('body-parser')
 
 
 router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', async (req, res) => {
-    const quizzes = await Quiz.findAll();
-    res.json(quizzes)
+    const quiz = await Quiz.findAll();
+    res.json(quiz)
 });
 
-router.post('/', (req, res) => {
-    const { id, name} = req.body;
-    quizzes.push({
-        id: Number(id),
-        name
-    });
-    res.json(quizzes)
+router.post('/', async (req, res) => {
+    // const { id, name} = req.body;
+    // quizzes.push({
+    //     id: Number(id),
+    //     name
+    // });
+    const { name } = req.body;
+    const quiz = await Quiz.name({name});
+    res.json(quiz)
 });
 
 router.get('/:id', (req, res) => {
