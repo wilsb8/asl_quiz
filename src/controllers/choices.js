@@ -1,45 +1,42 @@
-const express = require('express');
-const router = express.Router();
-let choices = require('../models/choices');
-const bodyParser = require('body-parser');
+const express = require('express')
+const router = express.Router()
+const { Choice } = require('../models');
+const bodyParser = require('body-parser')
+
 
 router.use(bodyParser.urlencoded({ extended: false }))
 
-router.get('/', (req, res) => {
-    res.json(choices)
+router.get('/', async (req, res) => {
+    const choice = await Choice.findAll();
+    res.json(choice)
 });
 
-router.post('/', (req, res) => {
-    const { id, name} = req.body;
-    choices.push({
-        id: Number(id),
-        name
-    });
-    res.json(choices)
+router.post('/', async (req, res) => {
+    const { name } = req.body;
+    const choice = await Choice.create({name})
+    res.json(choice)
 });
 
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    const ch = choices.find(c => c.id == id);
-    res.json(ch);
+router.get('/:id', async (req, res) => {
+    const choice = await Choice.findByPk(req.params.id)
+    res.json(choice);
 });
 
-router.post('/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const ch = choices.find(c => c.id == id);
-    choices.map((c) => {
-        if (id === c.id) {
-            c.name = req.body.name;
-        }
-        return c;
-    });
-    res.json(ch)
+router.post('/:id', async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+    const choice = await Choice.update({ name }, {
+        where: { id }
+    }); 
+    res.json(choice)
 });
 
-router.delete('/:id', (req, res) => {
-    const id = Number(req.params.id);
-    choices = choices.filter(c => c.id !== id);
-    res.json(choices);
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+     await Choice.destroy({
+         where: { id }
+    })
+    res.redirect('/choices')
 });
 
 module.exports = router;

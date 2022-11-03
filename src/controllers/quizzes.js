@@ -12,38 +12,31 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    // const { id, name} = req.body;
-    // quizzes.push({
-    //     id: Number(id),
-    //     name
-    // });
     const { name } = req.body;
     const quiz = await Quiz.create({name})
     res.json(quiz)
 });
 
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    const quiz = quizzes.find(q => q.id == id);
+router.get('/:id', async (req, res) => {
+    const quiz = await Quiz.findByPk(req.params.id)
     res.json(quiz);
 });
 
-router.post('/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const quiz = quizzes.find(q => q.id == id);
-    quizzes.map((q) => {
-        if (id === q.id) {
-            q.name = req.body.name;
-        }
-        return q;
-    });
+router.post('/:id', async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+    const quiz = await Quiz.update({ name }, {
+        where: { id }
+    }); 
     res.json(quiz)
 });
 
-router.delete('/:id', (req, res) => {
-    const id = Number(req.params.id);
-    quizzes = quizzes.filter(q => q.id !== id);
-    res.json(quizzes);
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+     await Quiz.destroy({
+         where: { id }
+    })
+    res.redirect('/quizzes')
 });
 
 module.exports = router;

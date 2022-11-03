@@ -1,45 +1,42 @@
-const express = require('express');
-const router = express.Router();
-let questions = require('../models/questions');
-const bodyParser = require('body-parser');
+const express = require('express')
+const router = express.Router()
+const { Question } = require('../models');
+const bodyParser = require('body-parser')
+
 
 router.use(bodyParser.urlencoded({ extended: false }))
 
-router.get('/', (req, res) => {
-    res.json(questions)
+router.get('/', async (req, res) => {
+    const question = await Question.findAll();
+    res.json(question)
 });
 
-router.post('/', (req, res) => {
-    const { id, name} = req.body;
-    questions.push({
-        id: Number(id),
-        name
-    });
-    res.json(questions)
+router.post('/', async (req, res) => {
+    const { name } = req.body;
+    const question = await Question.create({name})
+    res.json(question)
 });
 
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    const qtn = questions.find(q => q.id == id);
-    res.json(qtn);
+router.get('/:id', async (req, res) => {
+    const question = await Question.findByPk(req.params.id)
+    res.json(question);
 });
 
-router.post('/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const qtn = questions.find(q => q.id == id);
-    questions.map((q) => {
-        if (id === q.id) {
-            q.name = req.body.name;
-        }
-        return q;
-    });
-    res.json(qtn)
+router.post('/:id', async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+    const question = await Question.update({ name }, {
+        where: { id }
+    }); 
+    res.json(question)
 });
 
-router.delete('/:id', (req, res) => {
-    const id = Number(req.params.id);
-    questions = questions.filter(q => q.id !== id);
-    res.json(questions);
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+     await Question.destroy({
+         where: { id }
+    })
+    res.redirect('/questions')
 });
 
 module.exports = router;
