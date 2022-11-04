@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Quiz.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    weight: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Quiz',
