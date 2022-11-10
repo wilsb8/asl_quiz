@@ -8,19 +8,28 @@ router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', async (req, res) => {
     const quiz = await Quiz.findAll();
-    res.json(quiz)
+    res.render('quiz/index', {quiz})
 });
+
+router.get('/new', (req, res) => {
+    res.render('quiz/create')
+})
 
 router.post('/', async (req, res) => {
     const { name } = req.body;
     const { weight } = req.body;
     const quiz = await Quiz.create({name, weight})
-    res.json(quiz)
+    res.redirect('/quizzes' + quiz.id) 
 });
 
 router.get('/:id', async (req, res) => {
     const quiz = await Quiz.findByPk(req.params.id)
-    res.json(quiz);
+    res.render('quiz/show', { quiz })
+});
+
+router.get('/:id/edit', async (req, res) => {
+    const quiz = await Quiz.findByPk(req.params.id)
+    res.render('quiz/edit', { quiz })
 });
 
 router.post('/:id', async (req, res) => {
