@@ -10,12 +10,12 @@
             <input id="name" type="text" name="name" value="{{quiz.name}}" />
             <label for="weight">Weight: </label>
             <input id="name" type="text" name="name" value="{{quiz.weight}}" /> 
-        {* else *}
+        {% else %}
             <label for="name">Name: </label>
             <input id="name" type="text" name="name" />
             <label for="weight">Weight: </label>
             <input id="weight" type="text" name="weight" />
-        {* endif *}
+        {% endif %}
     </div>
     <input type="submit" value="Save Quiz" />
 </form>

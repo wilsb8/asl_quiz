@@ -22,8 +22,12 @@ router.get('/new', (req, res) => {
 router.post('/', async (req, res) => {
     const { name } = req.body;
     const { weight } = req.body;
-    const quiz = await Quiz.create({name, weight})
-    res.redirect('/quizzes/' + quiz.id) 
+    const quiz = await Quiz.create({ name, weight })
+    if (req.headers.accept.indexOf('/json') >= -1) {
+        res.json(quiz) 
+    } else {
+        res.redirect('/quizzes/' + quiz.id) 
+    }
 });
 
 router.get('/:id', async (req, res) => {
