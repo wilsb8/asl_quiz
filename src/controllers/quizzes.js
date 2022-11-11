@@ -8,7 +8,7 @@ router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', async (req, res) => {
     const quiz = await Quiz.findAll();
-    res.render('quiz/index', {quiz})
+    res.render('quiz/index', { quiz })
 });
 
 router.get('/new', (req, res) => {
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     const { name } = req.body;
     const { weight } = req.body;
     const quiz = await Quiz.create({name, weight})
-    res.redirect('/quizzes' + quiz.id) 
+    res.redirect('/quizzes/' + quiz.id) 
 });
 
 router.get('/:id', async (req, res) => {
@@ -42,7 +42,7 @@ router.post('/:id', async (req, res) => {
     res.json(quiz)
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id/delete', async (req, res) => {
     const { id } = req.params;
      await Quiz.destroy({
          where: { id }

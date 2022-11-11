@@ -1,11 +1,12 @@
 {% extends "layouts/_default.twig" %}
 {% block main_content %}
-    <h1>Hello, world</h1>
     <ul>
         {% for quiz in quizzes %}
             <li>
             {{quiz.name}} -
             <a href="/quizzes/{{quiz.id}}/edit">Edit</a>
+            |
+            <a href="/quizzes/{{quiz.id}}/delete">Delete</a>
             </li>
         {% endfor %}
     </ul>
