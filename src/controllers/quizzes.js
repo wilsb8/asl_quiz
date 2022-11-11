@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     if (req.headers.accept.indexOf('/json') >= -1) {
         res.json(quiz) 
     } else {
-        res.render('quiz/index', { quiz })
+        res.redirect('quiz/index', { quiz })
     }
 });
 
