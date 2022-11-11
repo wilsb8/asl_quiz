@@ -8,7 +8,11 @@ router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', async (req, res) => {
     const quiz = await Quiz.findAll();
-    res.render('quiz/index', { quiz })
+    if (req.headers.accept.indexOf('/json') >= -1) {
+        res.json(quiz) 
+    } else {
+        res.render('quiz/index', { quiz })
+    }
 });
 
 router.get('/new', (req, res) => {
@@ -39,10 +43,10 @@ router.post('/:id', async (req, res) => {
     const quiz = await Quiz.update({ name,weight }, {
         where: { id }
     }); 
-    res.json(quiz)
+    res.redirect('/quizzes/' + id)
 });
 
-router.delete('/:id/delete', async (req, res) => {
+router.get('/:id/delete', async (req, res) => {
     const { id } = req.params;
      await Quiz.destroy({
          where: { id }
