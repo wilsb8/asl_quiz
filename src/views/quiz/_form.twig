@@ -4,7 +4,6 @@
     <form action="/quizzes" method="post">
 {% endif %}
     <div>
-        <label for="name">Name: </label>
         {% if quiz %}
             <label for="name">Name: </label>
             <input id="name" type="text" name="name" value="{{quiz.name}}" />
