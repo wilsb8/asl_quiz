@@ -7,19 +7,28 @@ const bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', async (req, res) => {
-    const question = await Question.findAll();
-    res.json(question)
+    const questions = await Question.findAll();
+    res.render('question/index', { questions }) 
 });
+
+router.get('/new', (req, res) => {
+    res.render('question/create')
+})
 
 router.post('/', async (req, res) => {
     const { name } = req.body;
-    const question = await Question.create({name})
-    res.json(question)
+    const question = await Question.create({ name })
+    res.redirect('/questions/' + question.id)
 });
 
 router.get('/:id', async (req, res) => {
     const question = await Question.findByPk(req.params.id)
-    res.json(question);
+    res.render('question/show', { question })
+});
+
+router.get('/:id/edit', async (req, res) => {
+    const question = await Question.findByPk(req.params.id)
+    res.render('question/edit', { question })
 });
 
 router.post('/:id', async (req, res) => {
@@ -28,10 +37,10 @@ router.post('/:id', async (req, res) => {
     const question = await Question.update({ name }, {
         where: { id }
     }); 
-    res.json(question)
+    res.redirect('/questions/' + id)
 });
 
-router.delete('/:id', async (req, res) => {
+router.get('/:id/delete', async (req, res) => {
     const { id } = req.params;
      await Question.destroy({
          where: { id }

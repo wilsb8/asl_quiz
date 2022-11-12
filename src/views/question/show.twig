@@ -1,0 +1,10 @@
+{% extends "layouts/_default.twig" %}
+{% block main_content %}
+    <h1>{{question.name}}</h1>
+    <p><strong>ID:</strong>{{question.id}}</p>
+    <p><strong>Created:</strong>{{question.createdAt}}</p>
+    <p><strong>Updated:</strong>{{question.updatedAt}}</p>
+    <p>
+        <a href="/questions/{{question.id}}/delete">Delete</a>
+    </p>
+{% endblock %}

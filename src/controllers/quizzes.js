@@ -7,12 +7,8 @@ const bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', async (req, res) => {
-    const quiz = await Quiz.findAll();
-    if (req.headers.accept.indexOf('/json') >= -1) {
-        res.json(quiz) 
-    } else {
-        res.redirect('quiz/index', { quiz })
-    }
+    const quizzes = await Quiz.findAll();
+    res.render('quiz/index', { quizzes }) 
 });
 
 router.get('/new', (req, res) => {
@@ -21,13 +17,8 @@ router.get('/new', (req, res) => {
 
 router.post('/', async (req, res) => {
     const { name } = req.body;
-    const { weight } = req.body;
-    const quiz = await Quiz.create({ name, weight })
-    if (req.headers.accept.indexOf('/json') >= -1) {
-        res.json(quiz) 
-    } else {
-        res.redirect('/quizzes/' + quiz.id) 
-    }
+    const quiz = await Quiz.create({ name })
+    res.redirect('/quizzes/' + quiz.id)
 });
 
 router.get('/:id', async (req, res) => {
@@ -42,9 +33,8 @@ router.get('/:id/edit', async (req, res) => {
 
 router.post('/:id', async (req, res) => {
     const { name } = req.body;
-    const { weight } = req.body;
     const { id } = req.params;
-    const quiz = await Quiz.update({ name,weight }, {
+    const quiz = await Quiz.update({ name }, {
         where: { id }
     }); 
     res.redirect('/quizzes/' + id)
