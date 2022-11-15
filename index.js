@@ -3,6 +3,7 @@ const app = express();
 const quizzesCtrl = require('./src/controllers/quizzes');
 const questCtrl = require('./src/controllers/questions');
 const choiceCtrl = require('./src/controllers/choices');
+const authCtrl = require('./src/controllers/auth')
 const { Quiz } = require('./src/models');
 
 app.set('views', __dirname = './src/views')
@@ -17,6 +18,7 @@ app.get('/', async (req, res) => {
 app.use('/quizzes', quizzesCtrl);
 app.use('/questions', questCtrl);
 app.use('/choices', choiceCtrl);
+app.use('/auth', authCtrl)
 
 
 
