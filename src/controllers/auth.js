@@ -18,18 +18,8 @@ router.get('/callback', async (req, res) => {
         }
     }, async (error, response, body) => {
         const { access_token } = queryString.parse(body)
-        console.log(access_token)
-        await request({
-            uri: 'https://api.github.com/user',
-            headers: {
-                'Authorization': `token ${access_token}`,
-                'User-Agent':'Mozilla/5.0'
-            }
-        }, async (error, response, body) => {
-            const data = queryString.parse(body)
-            console.log(data)
-            res.json(data)
-        })
+        req.session.access_token = access_token
+        res.redirect('/')
     })
 })
 

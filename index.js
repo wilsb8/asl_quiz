@@ -5,15 +5,21 @@ const questCtrl = require('./src/controllers/questions');
 const choiceCtrl = require('./src/controllers/choices');
 const authCtrl = require('./src/controllers/auth')
 const { Quiz } = require('./src/models');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const { response } = require('express');
 
+app.use(session({
+    saveUninitialized: false,
+    secret: 'keyboard cat',
+    cookie: { maxAge: 60000 }
+}))
+
+app.use(bodyParser.urlencoded({ extended: false }))
 app.set('views', __dirname = './src/views')
 app.set('view engine', 'twig')
 
-// GET /products HTTP/1.1
-app.get('/', async (req, res) => {
-    const quiz = await Quiz.findByPk(1)
-    res.render('home/home', {quiz});
-});
+app.get('/', (req, res, next) => { res.render('home/home') })
 
 app.use('/quizzes', quizzesCtrl);
 app.use('/questions', questCtrl);
