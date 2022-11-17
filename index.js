@@ -19,7 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.set('views', __dirname = './src/views')
 app.set('view engine', 'twig')
 
-app.get('/', (req, res, next) => { res.render('home/home') })
+app.get('/', (req, res, next) => {
+    res.render('home/home')
+})
 
 app.use('/quizzes', quizzesCtrl);
 app.use('/questions', questCtrl);

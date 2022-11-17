@@ -6,4 +6,6 @@ const isAuthenticated = (req, res, next) => {
     res.redirect('/auth/login')
 }
 
-module.exports = isAuthenticated
+module.exports = {
+    isAuthenticated
+}

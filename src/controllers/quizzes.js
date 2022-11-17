@@ -4,6 +4,7 @@ const { Quiz } = require('../models');
 const bodyParser = require('body-parser')
 const { isAuthenticated } = require('../middlewares/auth')
 
+
 router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', isAuthenticated, async (req, res) => {
@@ -11,7 +12,7 @@ router.get('/', isAuthenticated, async (req, res) => {
     res.render('quiz/index', { quizzes }) 
 });
 
-router.get('/new', isAuthenticated, (req, res) => {
+router.get('/new', isAuthenticated,  (req, res) => {
     res.render('quiz/create')
 })
 
@@ -21,12 +22,12 @@ router.post('/', isAuthenticated, async (req, res) => {
     res.redirect('/quizzes/' + quiz.id)
 });
 
-router.get('/:id', isAuthenticated, async (req, res) => {
+router.get('/:id', isAuthenticated,  async (req, res) => {
     const quiz = await Quiz.findByPk(req.params.id)
     res.render('quiz/show', { quiz })
 });
 
-router.get('/:id/edit', isAuthenticated, async (req, res) => {
+router.get('/:id/edit',isAuthenticated, async (req, res) => {
     const quiz = await Quiz.findByPk(req.params.id)
     res.render('quiz/edit', { quiz })
 });
