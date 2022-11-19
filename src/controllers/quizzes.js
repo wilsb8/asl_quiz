@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const { isAuthenticated } = require('../middlewares/auth')
 
 
+
 router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', isAuthenticated, async (req, res) => {

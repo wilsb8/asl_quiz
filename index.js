@@ -14,10 +14,11 @@ app.use(session({
     secret: 'keyboard cat',
     cookie: { maxAge: 60000 }
 }))
-
+// middelware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.set('views', __dirname = './src/views')
 app.set('view engine', 'twig')
+
 
 app.get('/', (req, res, next) => {
     res.render('home/home')

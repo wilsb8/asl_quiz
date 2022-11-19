@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const request = require('request')
 const queryString = require('querystring')
-
+ 
 router.get('/login', (req, res) => {
     res.render('auth/login')
 });
