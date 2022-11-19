@@ -7,12 +7,14 @@ const Quiz = () => {
 	const params = useParams()
 	useEffect(() => {
 		async function fetchQuiz() {
+			console.log("fetchQuiz called")
 			const q = await axios(`http://localhost:4000/quizzes/${params.id}`, {
 				headers: {
 					token:localStorage.token
 				}
 			})
-	  		setQuiz(q.data)
+			setQuiz(q.data)
+			console.log(q.data)
 		}
 		fetchQuiz()
 	}, []);
